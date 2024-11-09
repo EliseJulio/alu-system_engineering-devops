@@ -24,7 +24,7 @@ if ! grep -q "frontend elisejulio-frontend" /etc/haproxy/haproxy.cfg; then
 
     backend elisejulio-backend
         balance roundrobin
-        server 6310-web-01 54.85.169.157 check
+        server 6310-web-01 54.85.169.157:80 check
         server 6310-web-02 54.227.112.222:80 check"
     
     # Append the configuration to haproxy.cfg
