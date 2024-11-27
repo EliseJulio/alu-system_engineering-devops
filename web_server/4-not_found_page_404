@@ -1,26 +1,10 @@
 #!/usr/bin/env bash
-#configure Nginx server so that /redirect_me is redirecting to another page
+# Not found page
 
-sudo apt-get update -y
-sudo apt-get install -y nginx
-sudo ufw allow 'Nginx HTTP'
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/page404.html
-config=\
-"server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	error_page 404 /page404.html;
-	server_name _;
-	location / {
-		try_files \$uri \$uri/ =404;
-        }
-	location /redirect_me {
-                return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-        }
-}
-"
-echo "Holberton School" | sudo tee /var/www/html/index.html
-echo "$config" | sudo tee /etc/nginx/sites-available/default
+sudo apt update -y
+sudo apt install nginx -y
+
+sudo touch /var/www/html/error_404.html
+sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/error_404.html
 sudo service nginx restart
